@@ -125,19 +125,6 @@
   .section-head h2{font-size:17px; font-weight:700; color:var(--ink); border-left:4px solid var(--clay); padding-left:10px;}
   .section-head .hint{font-size:12.5px; color:var(--muted);}
 
-  .callout{
-    border-radius:12px; border:1px solid var(--border); background:var(--surface);
-    padding:18px 20px; box-shadow:var(--shadow);
-  }
-  .callout.info{border-left:4px solid var(--positive);}
-  .callout h3{font-size:13.5px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
-  .callout p{font-size:13.5px; line-height:1.6; color:var(--ink-2); margin:0 0 8px;}
-  .callout p:last-child{margin-bottom:0;}
-  .diff-row{display:flex; gap:22px; flex-wrap:wrap; margin-top:10px;}
-  .diff-item{font-size:12.5px; color:var(--muted);}
-  .diff-item b{display:block; font-family:'IBM Plex Mono'; font-size:14.5px; color:var(--ink); font-weight:600;}
-  .diff-item .arrow{color:var(--positive); font-weight:600;}
-
   .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
   @media (max-width:860px){ .grid-2{grid-template-columns:1fr;} }
 
@@ -281,19 +268,6 @@
   <div class="kpis" id="kpis"></div>
 
   <section>
-    <div class="callout info">
-      <h3>Dos ajustes aplicados al replicar el modelo</h3>
-      <p><b>1. Empresas antes excluidas del consolidado.</b> El archivo original resta por completo a Sauzal, Vista de Águila, Conquistadores Norte y Vías Machalí del total (no solo evita el doble conteo del subgrupo Rentas). Sus resultados sí son reales — se reincorporaron.</p>
-      <p><b>2. Fórmula de "A Pagar" de Inversiones HBD.</b> Sumaba el PPM en vez de restarlo, a diferencia del resto de las empresas sin franquicia. Se corrigió para seguir el mismo patrón.</p>
-      <div class="diff-row">
-        <div class="diff-item">Utilidad neta consolidada<br><b><span class="arrow">sin corregir</span> $<span id="diffUtilOld"></span> MM → <span class="arrow">corregida</span> $<span id="diffUtilNew"></span> MM</b></div>
-        <div class="diff-item">Impuesto teórico a pagar consolidado<br><b><span class="arrow">sin corregir</span> $<span id="diffPagOld"></span> MM → <span class="arrow">corregida</span> $<span id="diffPagNew"></span> MM</b></div>
-      </div>
-      <p style="margin-top:10px;">Además, a la fecha de este corte el PPM 2026 aún no está cargado en el archivo (columna en $0 en todas las empresas) — el "impuesto teórico a pagar" de abajo equivale hoy al 100% del impuesto renta proyectado, no a un saldo neto real.</p>
-    </div>
-  </section>
-
-  <section>
     <div class="section-head"><h2>Resumen ejecutivo</h2><span class="hint">Enero–agosto 2026 · cifras en MM$</span></div>
     <div class="grid-2">
       <div class="card">
@@ -398,11 +372,6 @@ document.getElementById('kpis').innerHTML = kpis.map(k=>`
     <div class="val mono">${k.val}</div>
     <div class="cap">${k.cap}</div>
   </div>`).join('');
-
-document.getElementById('diffUtilOld').textContent = fmtMM(c.utilidad_neta_original);
-document.getElementById('diffUtilNew').textContent = fmtMM(c.utilidad_neta);
-document.getElementById('diffPagOld').textContent = fmtMM(c.a_pagar_original);
-document.getElementById('diffPagNew').textContent = fmtMM(c.a_pagar);
 
 // ---------- resumen ejecutivo ----------
 const comp = DATA.companies;
