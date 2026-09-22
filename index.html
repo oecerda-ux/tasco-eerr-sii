@@ -11,6 +11,7 @@
     --surface-3:#e7ded4;
     --ink:#0e2447;
     --ink-2:#2b424a;
+    --navy:#0e2447;
     --muted:#5c6672;
     --border:#e0d8ce;
     --border-strong:#c9bfb2;
@@ -82,7 +83,7 @@
 
   /* ---------- header ---------- */
   header.top{
-    background:linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%);
+    background:linear-gradient(135deg, var(--navy) 0%, var(--ink-2) 100%);
     color:#f3f1ec;
     border-radius:14px;
     padding:28px 30px;
@@ -183,7 +184,7 @@
   .table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); background:var(--surface);}
   table{border-collapse:collapse; width:100%; table-layout:fixed; font-size:12px;}
   thead th{
-    position:sticky; top:0; background:var(--ink); color:#f2f1ec; text-align:right;
+    position:sticky; top:0; background:var(--navy); color:#f2f1ec; text-align:right;
     font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em;
     padding:10px 8px; white-space:normal; word-break:break-word; line-height:1.25; cursor:pointer; user-select:none;
   }
@@ -211,7 +212,7 @@
     font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; padding:9px 12px;
   }
   tr.seg-total td{background:var(--chip-bg); font-weight:600; border-top:1px solid var(--border-strong);}
-  tr.grand-total td{background:var(--ink); color:#fff; font-weight:700; border-top:2px solid var(--clay);}
+  tr.grand-total td{background:var(--navy); color:#fff; font-weight:700; border-top:2px solid var(--clay);}
   td.pos, .val-pos{color:var(--positive);}
   td.neg, .val-neg{color:var(--negative);}
   .rut{color:var(--muted); font-size:11px;}
@@ -226,11 +227,34 @@
   }
   .group-tab .n{color:var(--muted); font-weight:500;}
   .group-tab:hover:not(.active){background:var(--surface-2);}
-  .group-tab.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .group-tab.active{background:var(--navy); color:#fff; border-color:var(--navy);}
   .group-tab.active .n{color:#c7d2e2;}
   .grp-kpis{display:grid; grid-template-columns:repeat(5,1fr); gap:12px;}
   @media (max-width:920px){ .grp-kpis{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:480px){ .grp-kpis{grid-template-columns:1fr;} }
+
+  /* ---------- monthly flow table ---------- */
+  .flow-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:18px 0 10px; flex-wrap:wrap;}
+  .flow-head h3{font-size:13.5px; font-weight:700; color:var(--ink);}
+  .flow-head .hint{font-size:12px; color:var(--muted);}
+  table.flow-table{font-size:11px; table-layout:auto; width:100%;}
+  table.flow-table thead th{font-size:10px; padding:8px 6px; white-space:nowrap;}
+  table.flow-table tbody td{padding:7px 6px; font-size:11px; white-space:nowrap;}
+  table.flow-table tbody td:first-child{font-size:11px; font-weight:500; white-space:normal;}
+  @media (max-width:860px){
+    table.flow-table{min-width:680px;}
+    table.flow-table tbody td:first-child{white-space:nowrap;}
+  }
+  @media (max-width:700px){
+    table.flow-table{font-size:9.5px; min-width:620px;}
+    table.flow-table thead th{font-size:8.5px; padding:6px 5px;}
+    table.flow-table tbody td{padding:6px 5px; font-size:9.5px;}
+    table.flow-table tbody td:first-child{font-size:9px;}
+  }
+  tr.flow-subtotal td{background:var(--surface-2); font-weight:700;}
+  tr.flow-highlight td{background:var(--positive-soft); font-weight:700; border-top:1.5px solid var(--positive); border-bottom:1.5px solid var(--positive);}
+  tr.flow-final td{background:var(--navy); color:#fff; font-weight:700; border-top:2px solid var(--clay);}
+  tr.flow-final td.neg{color:#ffb4a3;}
 
   /* ---------- notes ---------- */
   .notes{font-size:12.5px; color:var(--muted); line-height:1.7;}
@@ -352,7 +376,7 @@
 </div>
 
 <script>
-const DATA = {"companies":[{"code":"C","nombre":"Inversiones HBD","nombre_legal":"INVERSIONES HBD LTDA","rut":"76.401.726-9","segmento":"Holding y Servicios","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-4953217,"result_oper":-4953217,"ing_no_op":35091252,"gastos_no_op":113720872,"result_no_op":148812124,"utilidad_neta":143858907,"mb":null,"mo":null,"mn":null,"result_trib_proy":143858907,"tasa":0.27,"impuesto_proy":38841904.89,"ppm":0,"franquicia14e":false,"a_pagar":38841904.89},{"code":"E","nombre":"Inmob. Playa Blanca","nombre_legal":"INMOBILIARIA PLAYA BLANCA SA.","rut":"96.679.910-2","segmento":"Inmobiliarias y Rentas","ingresos":377113573,"costos":-108390693,"margen_expl":268722880,"gastos_admin":-60405589,"result_oper":208317291,"ing_no_op":49705716,"gastos_no_op":-50744243,"result_no_op":-1038527,"utilidad_neta":207278764,"mb":71.3,"mo":55.2,"mn":55.0,"result_trib_proy":207278764,"tasa":0.27,"impuesto_proy":55965266.28,"ppm":0,"franquicia14e":true,"a_pagar":27982633.14},{"code":"F","nombre":"Inmob. Nuevo Mundo","nombre_legal":"INMOBILIARIA NUEVO MUNDO S.A.","rut":"99.549.220-2","segmento":"Inmobiliarias y Rentas","ingresos":776573268,"costos":-17169392,"margen_expl":759403876,"gastos_admin":-207216206,"result_oper":552187670,"ing_no_op":-105357903,"gastos_no_op":-261548944,"result_no_op":-366906847,"utilidad_neta":185280823,"mb":97.8,"mo":71.1,"mn":23.9,"result_trib_proy":185280823,"tasa":0.27,"impuesto_proy":50025822.21,"ppm":0,"franquicia14e":true,"a_pagar":25012911.105},{"code":"G","nombre":"Rentas Plaza de Asís","nombre_legal":"RENTAS PLAZA DE ASIS SPA","rut":"76.625.361-K","segmento":"Inmobiliarias y Rentas","ingresos":947436435,"costos":-1076862,"margen_expl":946359573,"gastos_admin":-156936953,"result_oper":789422620,"ing_no_op":-41111723,"gastos_no_op":-149894290,"result_no_op":-191006013,"utilidad_neta":598416607,"mb":99.9,"mo":83.3,"mn":63.2,"result_trib_proy":598416607,"tasa":0.27,"impuesto_proy":161572483.89000002,"ppm":0,"franquicia14e":false,"a_pagar":161572483.89000002},{"code":"H","nombre":"Santa Gloria","nombre_legal":"SANTA GLORIA LTDA.","rut":"78.111.730-7","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":0,"result_oper":0,"ing_no_op":-170089838,"gastos_no_op":-18067759,"result_no_op":-188157597,"utilidad_neta":-188157597,"mb":null,"mo":null,"mn":null,"result_trib_proy":-188157597,"tasa":0.27,"impuesto_proy":-50802551.190000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"I","nombre":"Grupo Tasco Boetsch","nombre_legal":"GRUPO TASCO BOETSCH SPA","rut":"76.981.792-1","segmento":"Holding y Servicios","ingresos":773141351,"costos":-122904722,"margen_expl":650236629,"gastos_admin":-531053679,"result_oper":119182950,"ing_no_op":-293161579,"gastos_no_op":259887757,"result_no_op":-33273822,"utilidad_neta":85909128,"mb":84.1,"mo":15.4,"mn":11.1,"result_trib_proy":85909128,"tasa":0.27,"impuesto_proy":23195464.560000002,"ppm":0,"franquicia14e":false,"a_pagar":23195464.560000002},{"code":"J","nombre":"Adm. Tiempo Norte","nombre_legal":"ADMINISTRADORA TIEMPO NORTE S.A.","rut":"96.782.460-7","segmento":"Inmobiliarias y Rentas","ingresos":1357568851,"costos":-843881512,"margen_expl":513687339,"gastos_admin":-272239297,"result_oper":241448042,"ing_no_op":9323801,"gastos_no_op":-97287556,"result_no_op":-87963755,"utilidad_neta":153484287,"mb":37.8,"mo":17.8,"mn":11.3,"result_trib_proy":153484287,"tasa":0.27,"impuesto_proy":41440757.49,"ppm":0,"franquicia14e":false,"a_pagar":41440757.49},{"code":"K","nombre":"Inversierra","nombre_legal":"INVERSIERRA S.A.","rut":"89.033.500-4","segmento":"Inmobiliarias y Rentas","ingresos":17657068732,"costos":-14752904724,"margen_expl":2904164008,"gastos_admin":-407027928,"result_oper":2497136080,"ing_no_op":1193173997,"gastos_no_op":-841863801,"result_no_op":351310196,"utilidad_neta":2848446276,"mb":16.4,"mo":14.1,"mn":16.1,"result_trib_proy":2848446276,"tasa":0.27,"impuesto_proy":769080494.5200001,"ppm":0,"franquicia14e":false,"a_pagar":769080494.5200001},{"code":"L","nombre":"Inmob. ICV Sauzal","nombre_legal":"INMOB ICV SAUZAL SPA","rut":"77.517.144-8","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-20141100,"margen_expl":-20141100,"gastos_admin":-1197040,"result_oper":-21338140,"ing_no_op":666185179,"gastos_no_op":-179648432,"result_no_op":486536747,"utilidad_neta":465198607,"mb":null,"mo":null,"mn":null,"result_trib_proy":465198607,"tasa":0.27,"impuesto_proy":125603623.89000002,"ppm":0,"franquicia14e":false,"a_pagar":125603623.89000002},{"code":"M","nombre":"Inmob. Vista de Águila","nombre_legal":"INMOBILIARIA VISTA DE AGUILA SPA","rut":"76.832.227-9","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-168583,"margen_expl":-168583,"gastos_admin":-1218812,"result_oper":-1387395,"ing_no_op":96793017,"gastos_no_op":-68763490,"result_no_op":28029527,"utilidad_neta":26642132,"mb":null,"mo":null,"mn":null,"result_trib_proy":26642132,"tasa":0.27,"impuesto_proy":7193375.640000001,"ppm":0,"franquicia14e":false,"a_pagar":7193375.640000001},{"code":"N","nombre":"Inmob. Conquistadores Norte","nombre_legal":"INMOBILIARIA CONQUISTADORES NORTE SA","rut":"76.248.333-5","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-461202,"result_oper":-461202,"ing_no_op":366976144,"gastos_no_op":-412499171,"result_no_op":-45523027,"utilidad_neta":-45984229,"mb":null,"mo":null,"mn":null,"result_trib_proy":-45984229,"tasa":0.27,"impuesto_proy":-12415741.83,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"O","nombre":"Inmob. Vías Machalí","nombre_legal":"INMOB. VIAS MACHALI SPA","rut":"77148377-1","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-1689331,"margen_expl":-1689331,"gastos_admin":0,"result_oper":-1689331,"ing_no_op":0,"gastos_no_op":0,"result_no_op":0,"utilidad_neta":-1689331,"mb":null,"mo":null,"mn":null,"result_trib_proy":-1689331,"tasa":0.27,"impuesto_proy":-456119.37000000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"P","nombre":"Inmob. Cerro Navidad","nombre_legal":"INMOBILIARIA CERRO NAVIDAD LTDA","rut":"77.975.310-7","segmento":"Inmobiliarias y Rentas","ingresos":12696959,"costos":-5164191,"margen_expl":7532768,"gastos_admin":-1484803,"result_oper":6047965,"ing_no_op":36830325,"gastos_no_op":-37538381,"result_no_op":-708056,"utilidad_neta":5339909,"mb":59.3,"mo":47.6,"mn":42.1,"result_trib_proy":5339909,"tasa":0.27,"impuesto_proy":1441775.4300000002,"ppm":0,"franquicia14e":false,"a_pagar":1441775.4300000002},{"code":"Q","nombre":"Proy. y Const. Tasco","nombre_legal":"PROYECTOS Y CONSTRUCCIONES TASCO LTDA","rut":"80.965.500-8","segmento":"Constructora","ingresos":9016625129,"costos":-9185175014,"margen_expl":-168549885,"gastos_admin":-295556710,"result_oper":-464106595,"ing_no_op":40329878,"gastos_no_op":-821810920,"result_no_op":-781481042,"utilidad_neta":-1245587637,"mb":-1.9,"mo":-5.1,"mn":-13.8,"result_trib_proy":-1245587637,"tasa":0.27,"impuesto_proy":-336308661.99,"ppm":0,"franquicia14e":false,"a_pagar":-336308661.99},{"code":"R","nombre":"BLC","nombre_legal":"BLC LTDA","rut":"78.437.910-8","segmento":"Constructora","ingresos":1790480796,"costos":-1706987923,"margen_expl":83492873,"gastos_admin":-2427145,"result_oper":81065728,"ing_no_op":2390749,"gastos_no_op":-28146372,"result_no_op":-25755623,"utilidad_neta":55310105,"mb":4.7,"mo":4.5,"mn":3.1,"result_trib_proy":55310105,"tasa":0.27,"impuesto_proy":14933728.350000001,"ppm":0,"franquicia14e":false,"a_pagar":14933728.350000001},{"code":"S","nombre":"Equipos y Moldajes Beta","nombre_legal":"EQUIPOS Y MOLDAJES BETA LTDA.","rut":"87.793.400-4","segmento":"Constructora","ingresos":271410627,"costos":-184333668,"margen_expl":87076959,"gastos_admin":-325526,"result_oper":86751433,"ing_no_op":-9313739,"gastos_no_op":-12550806,"result_no_op":-21864545,"utilidad_neta":64886888,"mb":32.1,"mo":32.0,"mn":23.9,"result_trib_proy":64886888,"tasa":0.27,"impuesto_proy":17519459.76,"ppm":0,"franquicia14e":false,"a_pagar":17519459.76},{"code":"T","nombre":"Mapa Asesorías","nombre_legal":"MAPA ASESORIAS SpA","rut":"77.274.627-K","segmento":"Holding y Servicios","ingresos":12865138,"costos":0,"margen_expl":12865138,"gastos_admin":-72320498,"result_oper":-59455360,"ing_no_op":41262329,"gastos_no_op":-104263734,"result_no_op":-63001405,"utilidad_neta":-122456765,"mb":100.0,"mo":-462.1,"mn":-951.8,"result_trib_proy":-122456765,"tasa":0.125,"impuesto_proy":-15307095.625,"ppm":0,"franquicia14e":false,"a_pagar":-15307095.625},{"code":"U","nombre":"Santa Paz","nombre_legal":"SANTA PAZ LTDA.","rut":"76.785.982-1","segmento":"Inmobiliarias y Rentas","ingresos":65261711,"costos":-6597851,"margen_expl":58663860,"gastos_admin":-31214271,"result_oper":27449589,"ing_no_op":-3685837,"gastos_no_op":-1540942,"result_no_op":-5226779,"utilidad_neta":22222810,"mb":89.9,"mo":42.1,"mn":34.1,"result_trib_proy":22222810,"tasa":0.125,"impuesto_proy":2777851.25,"ppm":0,"franquicia14e":true,"a_pagar":1388925.625}],"consolidado":{"ingresos":33058242570,"costos":-26956585566,"margen_expl":6101657004,"result_oper":4055618128,"utilidad_neta":3258399684,"mb":18.5,"mo":12.3,"mn":9.9,"result_trib_proy":3258399684,"impuesto_proy":1309592008.1600003,"ppm":0,"a_pagar":903591780.6750005,"utilidad_neta_original":2814232505,"a_pagar_original":770794781.1450001},"segmentos":{"Holding y Servicios":{"ingresos":786006489,"utilidad_neta":107311270,"result_oper":54774373,"a_pagar":46730273.825,"n":3},"Inmobiliarias y Rentas":{"ingresos":21193719529,"utilidad_neta":4276479058,"result_oper":4297133189,"a_pagar":1160716980.7300003,"n":12},"Constructora":{"ingresos":11078516552,"utilidad_neta":-1125390644,"result_oper":-296289434,"a_pagar":-303855473.88,"n":3}},"grupo_rentas_subtotal":{"ingresos":2101123276,"utilidad_neta":990976194}};
+const DATA = {"companies":[{"code":"C","nombre":"Inversiones HBD","nombre_legal":"INVERSIONES HBD LTDA","rut":"76.401.726-9","segmento":"Holding y Servicios","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-4953217,"result_oper":-4953217,"ing_no_op":35091252,"gastos_no_op":113720872,"result_no_op":148812124,"utilidad_neta":143858907,"mb":null,"mo":null,"mn":null,"result_trib_proy":143858907,"tasa":0.27,"impuesto_proy":38841904.89,"ppm":0,"franquicia14e":false,"a_pagar":38841904.89},{"code":"E","nombre":"Inmob. Playa Blanca","nombre_legal":"INMOBILIARIA PLAYA BLANCA SA.","rut":"96.679.910-2","segmento":"Inmobiliarias y Rentas","ingresos":377113573,"costos":-108390693,"margen_expl":268722880,"gastos_admin":-60405589,"result_oper":208317291,"ing_no_op":49705716,"gastos_no_op":-50744243,"result_no_op":-1038527,"utilidad_neta":207278764,"mb":71.3,"mo":55.2,"mn":55.0,"result_trib_proy":207278764,"tasa":0.27,"impuesto_proy":55965266.28,"ppm":0,"franquicia14e":true,"a_pagar":27982633.14},{"code":"F","nombre":"Inmob. Nuevo Mundo","nombre_legal":"INMOBILIARIA NUEVO MUNDO S.A.","rut":"99.549.220-2","segmento":"Inmobiliarias y Rentas","ingresos":776573268,"costos":-17169392,"margen_expl":759403876,"gastos_admin":-207216206,"result_oper":552187670,"ing_no_op":-105357903,"gastos_no_op":-261548944,"result_no_op":-366906847,"utilidad_neta":185280823,"mb":97.8,"mo":71.1,"mn":23.9,"result_trib_proy":185280823,"tasa":0.27,"impuesto_proy":50025822.21,"ppm":0,"franquicia14e":true,"a_pagar":25012911.105},{"code":"G","nombre":"Rentas Plaza de Asís","nombre_legal":"RENTAS PLAZA DE ASIS SPA","rut":"76.625.361-K","segmento":"Inmobiliarias y Rentas","ingresos":947436435,"costos":-1076862,"margen_expl":946359573,"gastos_admin":-156936953,"result_oper":789422620,"ing_no_op":-41111723,"gastos_no_op":-149894290,"result_no_op":-191006013,"utilidad_neta":598416607,"mb":99.9,"mo":83.3,"mn":63.2,"result_trib_proy":598416607,"tasa":0.27,"impuesto_proy":161572483.89000002,"ppm":0,"franquicia14e":false,"a_pagar":161572483.89000002},{"code":"H","nombre":"Santa Gloria","nombre_legal":"SANTA GLORIA LTDA.","rut":"78.111.730-7","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":0,"result_oper":0,"ing_no_op":-170089838,"gastos_no_op":-18067759,"result_no_op":-188157597,"utilidad_neta":-188157597,"mb":null,"mo":null,"mn":null,"result_trib_proy":-188157597,"tasa":0.27,"impuesto_proy":-50802551.190000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"I","nombre":"Grupo Tasco Boetsch","nombre_legal":"GRUPO TASCO BOETSCH SPA","rut":"76.981.792-1","segmento":"Holding y Servicios","ingresos":773141351,"costos":-122904722,"margen_expl":650236629,"gastos_admin":-531053679,"result_oper":119182950,"ing_no_op":-293161579,"gastos_no_op":259887757,"result_no_op":-33273822,"utilidad_neta":85909128,"mb":84.1,"mo":15.4,"mn":11.1,"result_trib_proy":85909128,"tasa":0.27,"impuesto_proy":23195464.560000002,"ppm":0,"franquicia14e":false,"a_pagar":23195464.560000002},{"code":"J","nombre":"Adm. Tiempo Norte","nombre_legal":"ADMINISTRADORA TIEMPO NORTE S.A.","rut":"96.782.460-7","segmento":"Inmobiliarias y Rentas","ingresos":1357568851,"costos":-843881512,"margen_expl":513687339,"gastos_admin":-272239297,"result_oper":241448042,"ing_no_op":9323801,"gastos_no_op":-97287556,"result_no_op":-87963755,"utilidad_neta":153484287,"mb":37.8,"mo":17.8,"mn":11.3,"result_trib_proy":153484287,"tasa":0.27,"impuesto_proy":41440757.49,"ppm":0,"franquicia14e":false,"a_pagar":41440757.49},{"code":"K","nombre":"Inversierra","nombre_legal":"INVERSIERRA S.A.","rut":"89.033.500-4","segmento":"Inmobiliarias y Rentas","ingresos":17657068732,"costos":-14752904724,"margen_expl":2904164008,"gastos_admin":-407027928,"result_oper":2497136080,"ing_no_op":1193173997,"gastos_no_op":-841863801,"result_no_op":351310196,"utilidad_neta":2848446276,"mb":16.4,"mo":14.1,"mn":16.1,"result_trib_proy":2848446276,"tasa":0.27,"impuesto_proy":769080494.5200001,"ppm":0,"franquicia14e":false,"a_pagar":769080494.5200001},{"code":"L","nombre":"Inmob. ICV Sauzal","nombre_legal":"INMOB ICV SAUZAL SPA","rut":"77.517.144-8","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-20141100,"margen_expl":-20141100,"gastos_admin":-1197040,"result_oper":-21338140,"ing_no_op":666185179,"gastos_no_op":-179648432,"result_no_op":486536747,"utilidad_neta":465198607,"mb":null,"mo":null,"mn":null,"result_trib_proy":465198607,"tasa":0.27,"impuesto_proy":125603623.89000002,"ppm":0,"franquicia14e":false,"a_pagar":125603623.89000002},{"code":"M","nombre":"Inmob. Vista de Águila","nombre_legal":"INMOBILIARIA VISTA DE AGUILA SPA","rut":"76.832.227-9","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-168583,"margen_expl":-168583,"gastos_admin":-1218812,"result_oper":-1387395,"ing_no_op":96793017,"gastos_no_op":-68763490,"result_no_op":28029527,"utilidad_neta":26642132,"mb":null,"mo":null,"mn":null,"result_trib_proy":26642132,"tasa":0.27,"impuesto_proy":7193375.640000001,"ppm":0,"franquicia14e":false,"a_pagar":7193375.640000001},{"code":"N","nombre":"Inmob. Conquistadores Norte","nombre_legal":"INMOBILIARIA CONQUISTADORES NORTE SA","rut":"76.248.333-5","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-461202,"result_oper":-461202,"ing_no_op":366976144,"gastos_no_op":-412499171,"result_no_op":-45523027,"utilidad_neta":-45984229,"mb":null,"mo":null,"mn":null,"result_trib_proy":-45984229,"tasa":0.27,"impuesto_proy":-12415741.83,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"O","nombre":"Inmob. Vías Machalí","nombre_legal":"INMOB. VIAS MACHALI SPA","rut":"77148377-1","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-1689331,"margen_expl":-1689331,"gastos_admin":0,"result_oper":-1689331,"ing_no_op":0,"gastos_no_op":0,"result_no_op":0,"utilidad_neta":-1689331,"mb":null,"mo":null,"mn":null,"result_trib_proy":-1689331,"tasa":0.27,"impuesto_proy":-456119.37000000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"P","nombre":"Inmob. Cerro Navidad","nombre_legal":"INMOBILIARIA CERRO NAVIDAD LTDA","rut":"77.975.310-7","segmento":"Inmobiliarias y Rentas","ingresos":12696959,"costos":-5164191,"margen_expl":7532768,"gastos_admin":-1484803,"result_oper":6047965,"ing_no_op":36830325,"gastos_no_op":-37538381,"result_no_op":-708056,"utilidad_neta":5339909,"mb":59.3,"mo":47.6,"mn":42.1,"result_trib_proy":5339909,"tasa":0.27,"impuesto_proy":1441775.4300000002,"ppm":0,"franquicia14e":false,"a_pagar":1441775.4300000002},{"code":"Q","nombre":"Proy. y Const. Tasco","nombre_legal":"PROYECTOS Y CONSTRUCCIONES TASCO LTDA","rut":"80.965.500-8","segmento":"Constructora","ingresos":9016625129,"costos":-9185175014,"margen_expl":-168549885,"gastos_admin":-295556710,"result_oper":-464106595,"ing_no_op":40329878,"gastos_no_op":-821810920,"result_no_op":-781481042,"utilidad_neta":-1245587637,"mb":-1.9,"mo":-5.1,"mn":-13.8,"result_trib_proy":-1245587637,"tasa":0.27,"impuesto_proy":-336308661.99,"ppm":0,"franquicia14e":false,"a_pagar":-336308661.99},{"code":"R","nombre":"BLC","nombre_legal":"BLC LTDA","rut":"78.437.910-8","segmento":"Constructora","ingresos":1790480796,"costos":-1706987923,"margen_expl":83492873,"gastos_admin":-2427145,"result_oper":81065728,"ing_no_op":2390749,"gastos_no_op":-28146372,"result_no_op":-25755623,"utilidad_neta":55310105,"mb":4.7,"mo":4.5,"mn":3.1,"result_trib_proy":55310105,"tasa":0.27,"impuesto_proy":14933728.350000001,"ppm":0,"franquicia14e":false,"a_pagar":14933728.350000001},{"code":"S","nombre":"Equipos y Moldajes Beta","nombre_legal":"EQUIPOS Y MOLDAJES BETA LTDA.","rut":"87.793.400-4","segmento":"Constructora","ingresos":271410627,"costos":-184333668,"margen_expl":87076959,"gastos_admin":-325526,"result_oper":86751433,"ing_no_op":-9313739,"gastos_no_op":-12550806,"result_no_op":-21864545,"utilidad_neta":64886888,"mb":32.1,"mo":32.0,"mn":23.9,"result_trib_proy":64886888,"tasa":0.27,"impuesto_proy":17519459.76,"ppm":0,"franquicia14e":false,"a_pagar":17519459.76},{"code":"T","nombre":"Mapa Asesorías","nombre_legal":"MAPA ASESORIAS SpA","rut":"77.274.627-K","segmento":"Holding y Servicios","ingresos":12865138,"costos":0,"margen_expl":12865138,"gastos_admin":-72320498,"result_oper":-59455360,"ing_no_op":41262329,"gastos_no_op":-104263734,"result_no_op":-63001405,"utilidad_neta":-122456765,"mb":100.0,"mo":-462.1,"mn":-951.8,"result_trib_proy":-122456765,"tasa":0.125,"impuesto_proy":-15307095.625,"ppm":0,"franquicia14e":false,"a_pagar":-15307095.625},{"code":"U","nombre":"Santa Paz","nombre_legal":"SANTA PAZ LTDA.","rut":"76.785.982-1","segmento":"Inmobiliarias y Rentas","ingresos":65261711,"costos":-6597851,"margen_expl":58663860,"gastos_admin":-31214271,"result_oper":27449589,"ing_no_op":-3685837,"gastos_no_op":-1540942,"result_no_op":-5226779,"utilidad_neta":22222810,"mb":89.9,"mo":42.1,"mn":34.1,"result_trib_proy":22222810,"tasa":0.125,"impuesto_proy":2777851.25,"ppm":0,"franquicia14e":true,"a_pagar":1388925.625}],"consolidado":{"ingresos":33058242570,"costos":-26956585566,"margen_expl":6101657004,"result_oper":4055618128,"utilidad_neta":3258399684,"mb":18.5,"mo":12.3,"mn":9.9,"result_trib_proy":3258399684,"impuesto_proy":1309592008.1600003,"ppm":0,"a_pagar":903591780.6750005,"utilidad_neta_original":2814232505,"a_pagar_original":770794781.1450001},"segmentos":{"Holding y Servicios":{"ingresos":786006489,"utilidad_neta":107311270,"result_oper":54774373,"a_pagar":46730273.825,"n":3},"Inmobiliarias y Rentas":{"ingresos":21193719529,"utilidad_neta":4276479058,"result_oper":4297133189,"a_pagar":1160716980.7300003,"n":12},"Constructora":{"ingresos":11078516552,"utilidad_neta":-1125390644,"result_oper":-296289434,"a_pagar":-303855473.88,"n":3}},"grupo_rentas_subtotal":{"ingresos":2101123276,"utilidad_neta":990976194},"monthly":{"C":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"gastos_admin":[-436121,-672742,-516575,-732308,-760537,-641369,-1171557,-22008,0,0,0,0],"ing_no_op":[0,0,0,0,0,34317864,773388,0,0,0,0,0],"gastos_no_op":[-34736,0,0,-1080992,0,114836600,0,0,0,0,0,0]},"E":{"ingreso_expl":[46611882,46548741,46696152,46722782,41893139,53040080,47883462,47717335,0,0,0,0],"costos_expl":[-11415462,-11364743,-33013361,-17255225,-9407891,-9555447,-8164606,-8213958,0,0,0,0],"gastos_admin":[-2931262,69898647,-2936095,-51630512,-4869952,-51814941,-5043301,-11078173,0,0,0,0],"ing_no_op":[0,0,649203,0,0,49056513,0,0,0,0,0,0],"gastos_no_op":[0,0,0,0,-14276735,-36467508,0,0,0,0,0,0]},"F":{"ingreso_expl":[97776690,106720888,112636980,90141545,92334233,94727535,90247453,91987944,0,0,0,0],"costos_expl":[0,0,-12169392,0,-3000000,-2000000,0,0,0,0,0,0],"gastos_admin":[-14433103,-15070678,-14761880,-63712896,-12421813,-62242154,-13343068,-11230614,0,0,0,0],"ing_no_op":[574284,0,545381,84181,267930,-106963647,133968,0,0,0,0,0],"gastos_no_op":[-18979592,0,0,0,-298891,-222861307,-19409154,0,0,0,0,0]},"G":{"ingreso_expl":[117801219,117014340,115698133,116597866,119924547,121670834,119557093,119172403,0,0,0,0],"costos_expl":[-470050,-238404,0,-41650,0,0,-326758,0,0,0,0,0],"gastos_admin":[-10205494,-10423884,-10071428,-44823751,-14353472,-43984499,-11821003,-11253422,0,0,0,0],"ing_no_op":[2323840,0,0,0,434265,-43869828,0,0,0,0,0,0],"gastos_no_op":[0,0,10,0,-109929019,-39965281,0,0,0,0,0,0]},"H":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"gastos_admin":[0,0,0,0,0,0,0,0,0,0,0,0],"ing_no_op":[0,0,0,0,0,-170089838,0,0,0,0,0,0],"gastos_no_op":[-8676927,0,0,0,0,-527065,-8863767,0,0,0,0,0]},"I":{"ingreso_expl":[84135430,3928779,164574939,84962146,86000853,176484627,86496603,86557974,0,0,0,0],"costos_expl":[-24538486,-13442846,-12462720,-12847237,-12911018,-12936072,-12950126,-20816217,0,0,0,0],"gastos_admin":[-94636013,-54996228,-52508193,-59176112,-59450882,-60472153,-59592689,-90221409,0,0,0,0],"ing_no_op":[187870,112209,63500,130677,826195,-294978680,382967,113683,0,0,0,0],"gastos_no_op":[-24763853,642569,0,-11716815,537141,315065270,-19876555,0,0,0,0,0]},"J":{"ingreso_expl":[395155613,360443611,158291017,93684340,97419402,96539436,76211167,79824265,0,0,0,0],"costos_expl":[-153675694,-145517317,-105757290,-95568581,-85697039,-81753579,-85538651,-90373361,0,0,0,0],"gastos_admin":[-31340553,-33955620,-31031509,-31552032,-34789054,-32689277,-33063575,-43817677,0,0,0,0],"ing_no_op":[-83183,163448,2443196,94061,125807,6395416,79249,105807,0,0,0,0],"gastos_no_op":[-286409,35191,6243484,-32067231,264228,-68496299,-544454,-2436066,0,0,0,0]},"K":{"ingreso_expl":[23538466,544733783,8187437971,1572416880,5238628564,1556053491,-1409796180,1944055757,0,0,0,0],"costos_expl":[-24452742,-260533372,-2793431773,-1133223682,-5371252988,-4985196739,-150613458,-34199970,0,0,0,0],"gastos_admin":[-7100161,-40671704,-38015887,-98798670,-42663403,-80143569,-59819890,-39814644,0,0,0,0],"ing_no_op":[74142746,74473329,-7098655,59059,25576204,989221885,36572535,226894,0,0,0,0],"gastos_no_op":[-30189324,0,-306077,-77496660,0,-771252688,37380947,1,0,0,0,0]},"L":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[-862141,-834300,-834299,-1195172,-834839,-8734281,-3175332,-3670736,0,0,0,0],"gastos_admin":[-2185,-450679,-113476,-397236,-156957,-2232,-57010,-17265,0,0,0,0],"ing_no_op":[48586,1382436,398439,0,2615672,657735777,18109,3986160,0,0,0,0],"gastos_no_op":[-93611,0,0,0,0,-178080452,-1474369,0,0,0,0,0]},"M":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[-4004,0,0,0,0,-164579,0,0,0,0,0,0],"gastos_admin":[0,-1214697,0,0,0,0,0,-4115,0,0,0,0],"ing_no_op":[2096810,0,0,0,0,94126817,0,569390,0,0,0,0],"gastos_no_op":[0,-138666,0,0,0,-68624824,0,0,0,0,0,0]},"N":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"gastos_admin":[-86996,-91971,-87129,-87254,-87863,196448,-103986,-112451,0,0,0,0],"ing_no_op":[4557470,5073410,4738495,5646606,5982557,331157647,4859331,4960628,0,0,0,0],"gastos_no_op":[-26314065,0,0,0,0,-386090937,-94169,0,0,0,0,0]},"O":{"ingreso_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"costos_expl":[-1689331,0,0,0,0,0,0,0,0,0,0,0],"gastos_admin":[0,0,0,0,0,0,0,0,0,0,0,0],"ing_no_op":[0,0,0,0,0,0,0,0,0,0,0,0],"gastos_no_op":[0,0,0,0,0,0,0,0,0,0,0,0]},"P":{"ingreso_expl":[0,0,0,0,0,0,12696959,0,0,0,0,0],"costos_expl":[-169782,-915306,-609393,-969245,-1090869,-372704,-506189,-530703,0,0,0,0],"gastos_admin":[-195779,-21025,-13644,-768224,-29086,-426762,-17733,-12550,0,0,0,0],"ing_no_op":[0,0,0,0,0,36648711,181614,0,0,0,0,0],"gastos_no_op":[-3276783,0,0,0,-47763,-34213835,0,0,0,0,0,0]},"Q":{"ingreso_expl":[471638600,584019548,3525099631,-501211428,1047420458,3304868005,-350059189,934849504,0,0,0,0],"costos_expl":[-1378397995,-1216949772,-1119223920,-1380782735,-959082302,-1001771148,-1034890619,-1094076523,0,0,0,0],"gastos_admin":[49026722,-50955776,-83464972,-24076794,-52155478,-60059214,-20452268,-53418930,0,0,0,0],"ing_no_op":[1613976,1106925,972893,1949115,103000,34306340,252413,25216,0,0,0,0],"gastos_no_op":[-11453663,-13003855,15689516,-437385795,5268105,-378311160,-2614090,22,0,0,0,0]},"R":{"ingreso_expl":[0,0,0,0,702962759,862708646,0,224809391,0,0,0,0],"costos_expl":[-29910200,-106760689,-217408401,-235647544,-377177409,-366618209,-170206798,-203258673,0,0,0,0],"gastos_admin":[-123952,-129184,-59190,-1000009,-255846,-267962,-445186,-145816,0,0,0,0],"ing_no_op":[5184,317155,611523,492097,297933,666857,0,0,0,0,0,0],"gastos_no_op":[-9374752,0,-108,-7708258,386223,-11116242,-333235,0,0,0,0,0]},"S":{"ingreso_expl":[32338213,23674024,26753010,29741521,30776657,32741758,33359115,62026329,0,0,0,0],"costos_expl":[-17266273,-18147863,-20625890,-31818716,-18898511,-34701955,-24258090,-18616370,0,0,0,0],"gastos_admin":[-43659,-36967,-29245,-61750,-46895,-29839,-40289,-36882,0,0,0,0],"ing_no_op":[0,0,0,0,57018,-11303088,1913810,18521,0,0,0,0],"gastos_no_op":[-2062324,0,0,-19409144,0,11152170,-2231508,0,0,0,0,0]},"T":{"ingreso_expl":[1589886,1588038,1592079,1593669,1606938,1627815,1632921,1633792,0,0,0,0],"costos_expl":[0,0,0,0,0,0,0,0,0,0,0,0],"gastos_admin":[-8597803,-9587703,-8587229,-8767079,-9554105,-9292704,-8935580,-8998295,0,0,0,0],"ing_no_op":[41011551,-4252543,5418327,41917258,3822724,-46654988,0,0,0,0,0,0],"gastos_no_op":[-2109802,0,0,-53663024,0,-45146058,-3344850,0,0,0,0,0]},"U":{"ingreso_expl":[0,0,24205040,8084420,0,16427695,8271478,8273078,0,0,0,0],"costos_expl":[-2045997,0,0,0,-4551854,0,0,0,0,0,0,0],"gastos_admin":[-3728370,-3652864,-3589305,-4005705,-4082093,-3854599,-4138151,-4163184,0,0,0,0],"ing_no_op":[0,-171,-195,1229,0,-3686700,0,0,0,0,0,0],"gastos_no_op":[129452,0,0,0,0,-1670394,0,0,0,0,0,0]}}};
 
 const fmtMM = v => new Intl.NumberFormat('es-CL',{maximumFractionDigits:0,minimumFractionDigits:0}).format(v/1e6);
 const fmtPct = v => (v===null||v===undefined) ? '—' : new Intl.NumberFormat('es-CL',{maximumFractionDigits:1}).format(v)+'%';
@@ -547,6 +571,89 @@ function groupTotalRow(name, agg){
   </tr>`;
 }
 
+// ---------- flujo mensual por grupo ----------
+const MONTH_LABELS = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const RAW_KEYS = ['ingreso_expl','costos_expl','gastos_admin','ing_no_op','gastos_no_op'];
+
+let _activeMonthsCache = null;
+function computeActiveMonths(){
+  if (_activeMonthsCache !== null) return _activeMonthsCache;
+  let maxIdx = -1;
+  Object.values(DATA.monthly || {}).forEach(c=>{
+    RAW_KEYS.forEach(k=>{
+      (c[k]||[]).forEach((v,i)=>{ if (v !== 0) maxIdx = Math.max(maxIdx, i); });
+    });
+  });
+  _activeMonthsCache = maxIdx + 1 || 12;
+  return _activeMonthsCache;
+}
+
+function groupMonthlySeries(g){
+  const codes = companiesInGroup(g).map(x=>x.code);
+  const zeros = () => Array(12).fill(0);
+  const raw = {};
+  RAW_KEYS.forEach(k=>{
+    raw[k] = zeros();
+    codes.forEach(code=>{
+      const src = (DATA.monthly && DATA.monthly[code] && DATA.monthly[code][k]) || zeros();
+      src.forEach((v,i)=>{ raw[k][i] += v; });
+    });
+  });
+  const margen_expl = zeros(), result_oper = zeros(), result_no_op = zeros(), utilidad = zeros();
+  for (let i=0;i<12;i++){
+    margen_expl[i] = raw.ingreso_expl[i] + raw.costos_expl[i];
+    result_oper[i] = margen_expl[i] + raw.gastos_admin[i];
+    result_no_op[i] = raw.ing_no_op[i] + raw.gastos_no_op[i];
+    utilidad[i] = result_oper[i] + result_no_op[i];
+  }
+  return { ...raw, margen_expl, result_oper, result_no_op, utilidad };
+}
+
+const FLOW_ROWS = [
+  {key:'ingreso_expl', label:'Ingreso de Explotación'},
+  {key:'costos_expl',  label:'Costos Explotación'},
+  {key:'margen_expl',  label:'Margen de Explotación', cls:'flow-subtotal'},
+  {key:'gastos_admin', label:'Gastos de Administración y Ventas'},
+  {key:'result_oper',  label:'Resultado Operacional', cls:'flow-highlight'},
+  {key:'ing_no_op',    label:'Ingresos No Operacionales'},
+  {key:'gastos_no_op', label:'Gastos No Operacionales'},
+  {key:'result_no_op', label:'Resultado No Operacional', cls:'flow-subtotal'},
+  {key:'utilidad',     label:'Utilidad (Pérdida) del Ejercicio', cls:'flow-final'},
+];
+
+function renderFlowTable(g){
+  const nMonths = computeActiveMonths();
+  const series = groupMonthlySeries(g);
+  const months = MONTH_LABELS.slice(0, nMonths);
+
+  const headCells = `<th style="text-align:left; cursor:default;">Concepto</th>` +
+    months.map(m=>`<th style="cursor:default;">${m}</th>`).join('') +
+    `<th style="cursor:default;">Total</th>`;
+
+  const bodyRows = FLOW_ROWS.map(row=>{
+    const vals = series[row.key].slice(0, nMonths);
+    const total = vals.reduce((a,b)=>a+b, 0);
+    const monthCells = vals.map(v=>`<td class="mono${v<0?' neg':''}">${fmtMM(v)}</td>`).join('');
+    return `<tr class="${row.cls||''}">
+      <td>${row.label}</td>
+      ${monthCells}
+      <td class="mono${total<0?' neg':''}">${fmtMM(total)}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <div class="flow-head">
+      <h3>Flujo mensual del resultado</h3>
+      <span class="hint">Grupo ${g} · MM$ · ${months[0]}–${months[months.length-1]} 2026</span>
+    </div>
+    <div class="table-wrap">
+      <table class="flow-table">
+        <thead><tr>${headCells}</tr></thead>
+        <tbody>${bodyRows}</tbody>
+      </table>
+    </div>`;
+}
+
 function renderGroupTabs(){
   document.getElementById('groupTabs').innerHTML = groupOrder.map(g=>{
     const n = companiesInGroup(g).length;
@@ -585,6 +692,7 @@ function renderGroupPanel(){
 
   document.getElementById('groupPanel').innerHTML = `
     <div class="grp-kpis">${kpisHtml}</div>
+    ${renderFlowTable(g)}
     <div class="grid-2" style="margin-top:16px;">
       <div class="card">
         <h3>Utilidad neta por empresa</h3>
