@@ -1,0 +1,486 @@
+<title>Reporte EERR Consolidado Año</title>
+<meta name="description" content="Estado de resultados consolidado y proyección de impuesto teórico SII por empresa, Grupo Tasco.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ef;
+    --surface:#ffffff;
+    --surface-2:#efe8e1;
+    --surface-3:#e7ded4;
+    --ink:#0e2447;
+    --ink-2:#2b424a;
+    --muted:#5c6672;
+    --border:#e0d8ce;
+    --border-strong:#c9bfb2;
+    --positive:#2f5f9e;
+    --positive-soft:#e8eef8;
+    --negative:#ad4736;
+    --negative-soft:#f8ece9;
+    --clay:#ad4736;
+    --sand:#d8cdc5;
+    --chip-bg:#eef1f6;
+    --shadow: 0 1px 2px rgba(14,36,71,.06), 0 8px 24px -12px rgba(14,36,71,.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d131c;
+      --surface:#161f2c;
+      --surface-2:#1c2634;
+      --surface-3:#232f40;
+      --ink:#edf1f7;
+      --ink-2:#c6cedb;
+      --muted:#93a1b4;
+      --border:#2a3547;
+      --border-strong:#3a475c;
+      --positive:#5b87cc;
+      --positive-soft:#1c2c47;
+      --negative:#d0785f;
+      --negative-soft:#3a2420;
+      --clay:#d0785f;
+      --sand:#3a3229;
+      --chip-bg:#1c2634;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d131c;
+    --surface:#161f2c;
+    --surface-2:#1c2634;
+    --surface-3:#232f40;
+    --ink:#edf1f7;
+    --ink-2:#c6cedb;
+    --muted:#93a1b4;
+    --border:#2a3547;
+    --border-strong:#3a475c;
+    --positive:#5b87cc;
+    --positive-soft:#1c2c47;
+    --negative:#d0785f;
+    --negative-soft:#3a2420;
+    --clay:#d0785f;
+    --sand:#3a3229;
+    --chip-bg:#1c2634;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    padding:0 16px;
+    padding-block: 28px 60px;
+  }
+  .wrap{max-width:1180px; margin:0 auto;}
+  h1,h2,h3{font-family:'Libre Franklin', system-ui, sans-serif; text-wrap:balance; margin:0;}
+  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums;}
+
+  /* ---------- header ---------- */
+  header.top{
+    background:linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%);
+    color:#f3f1ec;
+    border-radius:14px;
+    padding:28px 30px;
+    box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between; align-items:flex-end;
+  }
+  .brandmark{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Libre Franklin'; font-weight:800; letter-spacing:.06em;
+    font-size:12px; text-transform:uppercase; color:#cdd8e8; margin-bottom:10px;
+  }
+  .brandmark::before{content:""; width:9px; height:9px; border-radius:2px; background:var(--clay); display:inline-block;}
+  header.top h1{font-size:clamp(22px,3.4vw,32px); font-weight:800; color:#fff; line-height:1.15;}
+  header.top p.sub{margin:8px 0 0; font-size:14.5px; color:#c7d2e2; max-width:56ch;}
+  .meta-box{
+    text-align:right; font-size:12.5px; color:#c7d2e2; line-height:1.7;
+  }
+  .meta-box strong{color:#fff; font-weight:600;}
+
+  /* ---------- kpi row ---------- */
+  .kpis{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:22px;
+  }
+  @media (max-width:920px){ .kpis{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .kpis{grid-template-columns:1fr;} }
+  .kpi{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:16px 16px 14px; box-shadow:var(--shadow);
+  }
+  .kpi .lbl{font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600;}
+  .kpi .val{font-size:22px; font-weight:600; margin-top:6px; line-height:1.15;}
+  .kpi .cap{font-size:12px; color:var(--muted); margin-top:5px;}
+  .kpi.accent-pos .val{color:var(--positive);}
+  .kpi.accent-neg .val{color:var(--negative);}
+
+  /* ---------- sections ---------- */
+  section{margin-top:34px;}
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;}
+  .section-head h2{font-size:17px; font-weight:700; color:var(--ink); border-left:4px solid var(--clay); padding-left:10px;}
+  .section-head .hint{font-size:12.5px; color:var(--muted);}
+
+  .callout{
+    border-radius:12px; border:1px solid var(--border); background:var(--surface);
+    padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .callout.info{border-left:4px solid var(--positive);}
+  .callout h3{font-size:13.5px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .callout p{font-size:13.5px; line-height:1.6; color:var(--ink-2); margin:0 0 8px;}
+  .callout p:last-child{margin-bottom:0;}
+  .diff-row{display:flex; gap:22px; flex-wrap:wrap; margin-top:10px;}
+  .diff-item{font-size:12.5px; color:var(--muted);}
+  .diff-item b{display:block; font-family:'IBM Plex Mono'; font-size:14.5px; color:var(--ink); font-weight:600;}
+  .diff-item .arrow{color:var(--positive); font-weight:600;}
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:860px){ .grid-2{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px 14px; box-shadow:var(--shadow);
+  }
+  .card h3{font-size:13.5px; font-weight:700; margin-bottom:2px;}
+  .card .desc{font-size:12px; color:var(--muted); margin-bottom:14px;}
+
+  /* bullet list resumen */
+  ul.exec{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  ul.exec li{font-size:13.5px; line-height:1.55; color:var(--ink-2); padding-left:16px; position:relative;}
+  ul.exec li::before{content:"—"; position:absolute; left:0; color:var(--clay); font-weight:700;}
+  ul.exec b{color:var(--ink); font-weight:600;}
+  ul.exec .tag{font-family:'IBM Plex Mono'; font-size:12px; padding:1px 6px; border-radius:4px; background:var(--chip-bg); color:var(--ink-2); margin-left:4px;}
+
+  .seg-row{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;}
+  @media (max-width:700px){ .seg-row{grid-template-columns:1fr;} }
+  .seg-tile{border:1px solid var(--border); border-radius:10px; padding:12px 14px; background:var(--surface-2);}
+  .seg-tile .nm{font-size:12px; font-weight:600; color:var(--ink-2); text-transform:uppercase; letter-spacing:.03em;}
+  .seg-tile .row{display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-top:6px;}
+  .seg-tile .row b{color:var(--ink); font-family:'IBM Plex Mono'; font-weight:600;}
+
+  /* ---------- bar chart ---------- */
+  .barchart{display:flex; flex-direction:column; gap:7px;}
+  .bar-row{display:grid; grid-template-columns:130px 1fr 92px; align-items:center; gap:10px; font-size:12px;}
+  .bar-row .nm{color:var(--ink-2); font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .bar-track{position:relative; height:16px; background:var(--surface-2); border-radius:4px; overflow:hidden;}
+  .bar-fill{position:absolute; top:0; bottom:0; left:0; border-radius:4px; transition:width .25s ease;}
+  .bar-fill.pos{background:var(--positive);}
+  .bar-fill.neg{background:var(--negative);}
+  .bar-row .v{font-family:'IBM Plex Mono'; text-align:right; font-size:12px;}
+  .bar-row .v.pos{color:var(--positive);}
+  .bar-row .v.neg{color:var(--negative);}
+  .bar-row:hover .nm{color:var(--ink);}
+  .legend{display:flex; gap:16px; font-size:11.5px; color:var(--muted); margin-top:12px;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .legend i{width:10px; height:10px; border-radius:3px; display:inline-block;}
+  .legend i.pos{background:var(--positive);}
+  .legend i.neg{background:var(--negative);}
+
+  /* ---------- table ---------- */
+  .table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); background:var(--surface);}
+  table{border-collapse:collapse; width:100%; table-layout:fixed; font-size:12px;}
+  thead th{
+    position:sticky; top:0; background:var(--ink); color:#f2f1ec; text-align:right;
+    font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.02em;
+    padding:10px 8px; white-space:normal; word-break:break-word; line-height:1.25; cursor:pointer; user-select:none;
+  }
+  thead th:first-child{text-align:left;}
+  thead th.sorted::after{content:" ▾"; opacity:.8;}
+  thead th.sorted.asc::after{content:" ▴";}
+  tbody td{padding:8px 8px; text-align:right; border-bottom:1px solid var(--border); font-family:'IBM Plex Mono'; font-size:11.5px; overflow:hidden; text-overflow:ellipsis;}
+  tbody td:first-child{text-align:left; font-family:'IBM Plex Sans'; font-size:12px; white-space:normal;}
+  tbody tr:hover td{background:var(--surface-2);}
+  .seg-tag{color:var(--muted); font-size:10.5px; font-weight:500;}
+  @media (max-width:520px){
+    table{font-size:10.5px;}
+    thead th{padding:8px 4px; font-size:9px;}
+    tbody td{padding:7px 4px; font-size:10.5px;}
+    tbody td:first-child{font-size:10.5px;}
+    .rut{font-size:9.5px;}
+    .seg-tag{display:none;}
+    colgroup col:nth-child(4), colgroup col:nth-child(6),
+    thead th:nth-child(4), thead th:nth-child(6),
+    tbody td:nth-child(4), tbody td:nth-child(6){display:none;}
+    thead th:first-child{width:26%;}
+  }
+  tr.seg-header td{
+    background:var(--surface-3); color:var(--ink); font-weight:700; font-family:'IBM Plex Sans';
+    font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; padding:9px 12px;
+  }
+  tr.seg-total td{background:var(--chip-bg); font-weight:600; border-top:1px solid var(--border-strong);}
+  tr.grand-total td{background:var(--ink); color:#fff; font-weight:700; border-top:2px solid var(--clay);}
+  td.pos, .val-pos{color:var(--positive);}
+  td.neg, .val-neg{color:var(--negative);}
+  .rut{color:var(--muted); font-size:11px;}
+  .badge-fr{font-size:9.5px; font-family:'IBM Plex Sans'; background:var(--positive-soft); color:var(--positive); padding:1px 5px; border-radius:4px; margin-left:5px; font-weight:600;}
+
+  /* ---------- notes ---------- */
+  .notes{font-size:12.5px; color:var(--muted); line-height:1.7;}
+  .notes ol{margin:8px 0 0; padding-left:20px;}
+  .notes li{margin-bottom:6px;}
+  footer{margin-top:38px; padding-top:16px; border-top:1px solid var(--border); font-size:11.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="brandmark">Grupo Tasco · Finanzas</div>
+      <h1>Reporte EERR Consolidado Año</h1>
+      <p class="sub">Estado de resultados por empresa y proyección de impuesto de renta a pagar, construido a partir de las 18 sociedades del grupo (Inmobiliaria, Constructora, Rentas y Holding).</p>
+    </div>
+    <div class="meta-box">
+      Período: <strong>Enero&nbsp;–&nbsp;Agosto 2026</strong><br>
+      Base: <strong>real a la fecha de carga, sin forecast aún</strong><br>
+      Empresas consolidadas: <strong>18</strong>
+    </div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <div class="callout info">
+      <h3>Dos ajustes aplicados al replicar el modelo</h3>
+      <p><b>1. Empresas antes excluidas del consolidado.</b> El archivo original resta por completo a Sauzal, Vista de Águila, Conquistadores Norte y Vías Machalí del total (no solo evita el doble conteo del subgrupo Rentas). Sus resultados sí son reales — se reincorporaron.</p>
+      <p><b>2. Fórmula de "A Pagar" de Inversiones HBD.</b> Sumaba el PPM en vez de restarlo, a diferencia del resto de las empresas sin franquicia. Se corrigió para seguir el mismo patrón.</p>
+      <div class="diff-row">
+        <div class="diff-item">Utilidad neta consolidada<br><b><span class="arrow">sin corregir</span> $<span id="diffUtilOld"></span> MM → <span class="arrow">corregida</span> $<span id="diffUtilNew"></span> MM</b></div>
+        <div class="diff-item">Impuesto teórico a pagar consolidado<br><b><span class="arrow">sin corregir</span> $<span id="diffPagOld"></span> MM → <span class="arrow">corregida</span> $<span id="diffPagNew"></span> MM</b></div>
+      </div>
+      <p style="margin-top:10px;">Además, a la fecha de este corte el PPM 2026 aún no está cargado en el archivo (columna en $0 en todas las empresas) — el "impuesto teórico a pagar" de abajo equivale hoy al 100% del impuesto renta proyectado, no a un saldo neto real.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Resumen ejecutivo</h2><span class="hint">Enero–agosto 2026 · cifras en MM$</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Lectura para el Directorio</h3>
+        <div class="desc">Hallazgos principales del cierre consolidado</div>
+        <ul class="exec" id="execList"></ul>
+        <div class="seg-row" id="segRow"></div>
+      </div>
+      <div class="card">
+        <h3>Utilidad neta por empresa</h3>
+        <div class="desc">Ordenado de mayor a menor, MM$</div>
+        <div class="barchart" id="chartUtilidad"></div>
+        <div class="legend"><span><i class="pos"></i>Utilidad</span><span><i class="neg"></i>Pérdida</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Posición tributaria teórica por empresa</h2><span class="hint">Impuesto renta proyectado − PPM pagados, MM$</span></div>
+    <div class="card">
+      <div class="desc">Positivo = saldo a pagar en la Operación Renta · Negativo = saldo a favor. No reemplaza la declaración F22.</div>
+      <div class="barchart" id="chartImpuesto"></div>
+      <div class="legend"><span><i class="neg"></i>A pagar</span><span><i class="pos"></i>A favor</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Detalle EERR e impuesto teórico por empresa</h2><span class="hint">Cifras en MM$ salvo columnas %</span></div>
+    <div class="table-wrap">
+      <table id="mainTable">
+        <colgroup>
+          <col style="width:19%">
+          <col style="width:9%"><col style="width:9%"><col style="width:9%">
+          <col style="width:9%"><col style="width:9%"><col style="width:7%">
+          <col style="width:10%"><col style="width:9.5%"><col style="width:9.5%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-k="nombre">Empresa</th>
+            <th data-k="ingresos">Ingresos</th>
+            <th data-k="result_oper">Result. Oper.</th>
+            <th data-k="mo">Mg Oper %</th>
+            <th data-k="utilidad_neta">Utilidad Neta</th>
+            <th data-k="mn">Mg Neto %</th>
+            <th data-k="tasa">Tasa</th>
+            <th data-k="impuesto_proy">Impto. Renta Proy.</th>
+            <th data-k="ppm">PPM Pagado</th>
+            <th data-k="a_pagar">A Pagar / (Favor)</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Metodología y notas</h2></div>
+    <div class="card notes">
+      <p>Cada empresa carga su EERR mensual a mano (enero a la fecha de cierre real) y proyecta a mano los meses restantes ("Forecast"); el total anual es la suma de ambos. El resultado tributario proyectado suma Agregados y resta Deducciones sobre la utilidad neta, se multiplica por la tasa de Primera Categoría (27% régimen general; 12,5% Mapa Asesorías y Santa Paz) y se compara contra los Pagos Provisionales Mensuales (PPM) ya enterados para obtener el saldo teórico a pagar o a favor.</p>
+      <ol>
+        <li>Inmobiliaria Playa Blanca, Inmobiliaria Nuevo Mundo, Rentas Plaza de Asís, Mapa Asesorías y Santa Paz aplican la franquicia Art. 14 E LIR (50% de la renta líquida reinvertida) — marcadas con <span class="badge-fr">14E</span> en la tabla.</li>
+        <li>Inmobiliaria Playa Blanca, Nuevo Mundo y Rentas Plaza de Asís forman además el subgrupo informativo "Grupo Rentas SpA" (ingresos MM$&nbsp;<span id="grNoteIng"></span> · utilidad neta MM$&nbsp;<span id="grNoteUt"></span>), ya incluido en el total por sus tres componentes — no se vuelve a sumar aparte.</li>
+        <li>Todas las cifras de impuesto son <strong>proyecciones teóricas</strong> a la fecha de este reporte; no reemplazan la Operación Renta (F22) ni una declaración ante el SII.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Fuente: Proyeccion Resultados SII 2026.xlsx — Directorio Inmobiliario / Resumen Proyectos</span>
+    <span id="genDate"></span>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"companies":[{"code":"C","nombre":"Inversiones HBD","nombre_legal":"INVERSIONES HBD LTDA","rut":"76.401.726-9","segmento":"Holding y Servicios","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-4953217,"result_oper":-4953217,"ing_no_op":35091252,"gastos_no_op":113720872,"result_no_op":148812124,"utilidad_neta":143858907,"mb":null,"mo":null,"mn":null,"result_trib_proy":143858907,"tasa":0.27,"impuesto_proy":38841904.89,"ppm":0,"franquicia14e":false,"a_pagar":38841904.89},{"code":"E","nombre":"Inmob. Playa Blanca","nombre_legal":"INMOBILIARIA PLAYA BLANCA SA.","rut":"96.679.910-2","segmento":"Inmobiliarias y Rentas","ingresos":377113573,"costos":-108390693,"margen_expl":268722880,"gastos_admin":-60405589,"result_oper":208317291,"ing_no_op":49705716,"gastos_no_op":-50744243,"result_no_op":-1038527,"utilidad_neta":207278764,"mb":71.3,"mo":55.2,"mn":55.0,"result_trib_proy":207278764,"tasa":0.27,"impuesto_proy":55965266.28,"ppm":0,"franquicia14e":true,"a_pagar":27982633.14},{"code":"F","nombre":"Inmob. Nuevo Mundo","nombre_legal":"INMOBILIARIA NUEVO MUNDO S.A.","rut":"99.549.220-2","segmento":"Inmobiliarias y Rentas","ingresos":776573268,"costos":-17169392,"margen_expl":759403876,"gastos_admin":-207216206,"result_oper":552187670,"ing_no_op":-105357903,"gastos_no_op":-261548944,"result_no_op":-366906847,"utilidad_neta":185280823,"mb":97.8,"mo":71.1,"mn":23.9,"result_trib_proy":185280823,"tasa":0.27,"impuesto_proy":50025822.21,"ppm":0,"franquicia14e":true,"a_pagar":25012911.105},{"code":"G","nombre":"Rentas Plaza de Asís","nombre_legal":"RENTAS PLAZA DE ASIS SPA","rut":"76.625.361-K","segmento":"Inmobiliarias y Rentas","ingresos":947436435,"costos":-1076862,"margen_expl":946359573,"gastos_admin":-156936953,"result_oper":789422620,"ing_no_op":-41111723,"gastos_no_op":-149894290,"result_no_op":-191006013,"utilidad_neta":598416607,"mb":99.9,"mo":83.3,"mn":63.2,"result_trib_proy":598416607,"tasa":0.27,"impuesto_proy":161572483.89000002,"ppm":0,"franquicia14e":false,"a_pagar":161572483.89000002},{"code":"H","nombre":"Santa Gloria","nombre_legal":"SANTA GLORIA LTDA.","rut":"78.111.730-7","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":0,"result_oper":0,"ing_no_op":-170089838,"gastos_no_op":-18067759,"result_no_op":-188157597,"utilidad_neta":-188157597,"mb":null,"mo":null,"mn":null,"result_trib_proy":-188157597,"tasa":0.27,"impuesto_proy":-50802551.190000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"I","nombre":"Grupo Tasco Boetsch","nombre_legal":"GRUPO TASCO BOETSCH SPA","rut":"76.981.792-1","segmento":"Holding y Servicios","ingresos":773141351,"costos":-122904722,"margen_expl":650236629,"gastos_admin":-531053679,"result_oper":119182950,"ing_no_op":-293161579,"gastos_no_op":259887757,"result_no_op":-33273822,"utilidad_neta":85909128,"mb":84.1,"mo":15.4,"mn":11.1,"result_trib_proy":85909128,"tasa":0.27,"impuesto_proy":23195464.560000002,"ppm":0,"franquicia14e":false,"a_pagar":23195464.560000002},{"code":"J","nombre":"Adm. Tiempo Norte","nombre_legal":"ADMINISTRADORA TIEMPO NORTE S.A.","rut":"96.782.460-7","segmento":"Inmobiliarias y Rentas","ingresos":1357568851,"costos":-843881512,"margen_expl":513687339,"gastos_admin":-272239297,"result_oper":241448042,"ing_no_op":9323801,"gastos_no_op":-97287556,"result_no_op":-87963755,"utilidad_neta":153484287,"mb":37.8,"mo":17.8,"mn":11.3,"result_trib_proy":153484287,"tasa":0.27,"impuesto_proy":41440757.49,"ppm":0,"franquicia14e":false,"a_pagar":41440757.49},{"code":"K","nombre":"Inversierra","nombre_legal":"INVERSIERRA S.A.","rut":"89.033.500-4","segmento":"Inmobiliarias y Rentas","ingresos":17657068732,"costos":-14752904724,"margen_expl":2904164008,"gastos_admin":-407027928,"result_oper":2497136080,"ing_no_op":1193173997,"gastos_no_op":-841863801,"result_no_op":351310196,"utilidad_neta":2848446276,"mb":16.4,"mo":14.1,"mn":16.1,"result_trib_proy":2848446276,"tasa":0.27,"impuesto_proy":769080494.5200001,"ppm":0,"franquicia14e":false,"a_pagar":769080494.5200001},{"code":"L","nombre":"Inmob. ICV Sauzal","nombre_legal":"INMOB ICV SAUZAL SPA","rut":"77.517.144-8","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-20141100,"margen_expl":-20141100,"gastos_admin":-1197040,"result_oper":-21338140,"ing_no_op":666185179,"gastos_no_op":-179648432,"result_no_op":486536747,"utilidad_neta":465198607,"mb":null,"mo":null,"mn":null,"result_trib_proy":465198607,"tasa":0.27,"impuesto_proy":125603623.89000002,"ppm":0,"franquicia14e":false,"a_pagar":125603623.89000002},{"code":"M","nombre":"Inmob. Vista de Águila","nombre_legal":"INMOBILIARIA VISTA DE AGUILA SPA","rut":"76.832.227-9","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-168583,"margen_expl":-168583,"gastos_admin":-1218812,"result_oper":-1387395,"ing_no_op":96793017,"gastos_no_op":-68763490,"result_no_op":28029527,"utilidad_neta":26642132,"mb":null,"mo":null,"mn":null,"result_trib_proy":26642132,"tasa":0.27,"impuesto_proy":7193375.640000001,"ppm":0,"franquicia14e":false,"a_pagar":7193375.640000001},{"code":"N","nombre":"Inmob. Conquistadores Norte","nombre_legal":"INMOBILIARIA CONQUISTADORES NORTE SA","rut":"76.248.333-5","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":0,"margen_expl":0,"gastos_admin":-461202,"result_oper":-461202,"ing_no_op":366976144,"gastos_no_op":-412499171,"result_no_op":-45523027,"utilidad_neta":-45984229,"mb":null,"mo":null,"mn":null,"result_trib_proy":-45984229,"tasa":0.27,"impuesto_proy":-12415741.83,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"O","nombre":"Inmob. Vías Machalí","nombre_legal":"INMOB. VIAS MACHALI SPA","rut":"77148377-1","segmento":"Inmobiliarias y Rentas","ingresos":0,"costos":-1689331,"margen_expl":-1689331,"gastos_admin":0,"result_oper":-1689331,"ing_no_op":0,"gastos_no_op":0,"result_no_op":0,"utilidad_neta":-1689331,"mb":null,"mo":null,"mn":null,"result_trib_proy":-1689331,"tasa":0.27,"impuesto_proy":-456119.37000000005,"ppm":0,"franquicia14e":false,"a_pagar":0},{"code":"P","nombre":"Inmob. Cerro Navidad","nombre_legal":"INMOBILIARIA CERRO NAVIDAD LTDA","rut":"77.975.310-7","segmento":"Inmobiliarias y Rentas","ingresos":12696959,"costos":-5164191,"margen_expl":7532768,"gastos_admin":-1484803,"result_oper":6047965,"ing_no_op":36830325,"gastos_no_op":-37538381,"result_no_op":-708056,"utilidad_neta":5339909,"mb":59.3,"mo":47.6,"mn":42.1,"result_trib_proy":5339909,"tasa":0.27,"impuesto_proy":1441775.4300000002,"ppm":0,"franquicia14e":false,"a_pagar":1441775.4300000002},{"code":"Q","nombre":"Proy. y Const. Tasco","nombre_legal":"PROYECTOS Y CONSTRUCCIONES TASCO LTDA","rut":"80.965.500-8","segmento":"Constructora","ingresos":9016625129,"costos":-9185175014,"margen_expl":-168549885,"gastos_admin":-295556710,"result_oper":-464106595,"ing_no_op":40329878,"gastos_no_op":-821810920,"result_no_op":-781481042,"utilidad_neta":-1245587637,"mb":-1.9,"mo":-5.1,"mn":-13.8,"result_trib_proy":-1245587637,"tasa":0.27,"impuesto_proy":-336308661.99,"ppm":0,"franquicia14e":false,"a_pagar":-336308661.99},{"code":"R","nombre":"BLC","nombre_legal":"BLC LTDA","rut":"78.437.910-8","segmento":"Constructora","ingresos":1790480796,"costos":-1706987923,"margen_expl":83492873,"gastos_admin":-2427145,"result_oper":81065728,"ing_no_op":2390749,"gastos_no_op":-28146372,"result_no_op":-25755623,"utilidad_neta":55310105,"mb":4.7,"mo":4.5,"mn":3.1,"result_trib_proy":55310105,"tasa":0.27,"impuesto_proy":14933728.350000001,"ppm":0,"franquicia14e":false,"a_pagar":14933728.350000001},{"code":"S","nombre":"Equipos y Moldajes Beta","nombre_legal":"EQUIPOS Y MOLDAJES BETA LTDA.","rut":"87.793.400-4","segmento":"Constructora","ingresos":271410627,"costos":-184333668,"margen_expl":87076959,"gastos_admin":-325526,"result_oper":86751433,"ing_no_op":-9313739,"gastos_no_op":-12550806,"result_no_op":-21864545,"utilidad_neta":64886888,"mb":32.1,"mo":32.0,"mn":23.9,"result_trib_proy":64886888,"tasa":0.27,"impuesto_proy":17519459.76,"ppm":0,"franquicia14e":false,"a_pagar":17519459.76},{"code":"T","nombre":"Mapa Asesorías","nombre_legal":"MAPA ASESORIAS SpA","rut":"77.274.627-K","segmento":"Holding y Servicios","ingresos":12865138,"costos":0,"margen_expl":12865138,"gastos_admin":-72320498,"result_oper":-59455360,"ing_no_op":41262329,"gastos_no_op":-104263734,"result_no_op":-63001405,"utilidad_neta":-122456765,"mb":100.0,"mo":-462.1,"mn":-951.8,"result_trib_proy":-122456765,"tasa":0.125,"impuesto_proy":-15307095.625,"ppm":0,"franquicia14e":false,"a_pagar":-15307095.625},{"code":"U","nombre":"Santa Paz","nombre_legal":"SANTA PAZ LTDA.","rut":"76.785.982-1","segmento":"Inmobiliarias y Rentas","ingresos":65261711,"costos":-6597851,"margen_expl":58663860,"gastos_admin":-31214271,"result_oper":27449589,"ing_no_op":-3685837,"gastos_no_op":-1540942,"result_no_op":-5226779,"utilidad_neta":22222810,"mb":89.9,"mo":42.1,"mn":34.1,"result_trib_proy":22222810,"tasa":0.125,"impuesto_proy":2777851.25,"ppm":0,"franquicia14e":true,"a_pagar":1388925.625}],"consolidado":{"ingresos":33058242570,"costos":-26956585566,"margen_expl":6101657004,"result_oper":4055618128,"utilidad_neta":3258399684,"mb":18.5,"mo":12.3,"mn":9.9,"result_trib_proy":3258399684,"impuesto_proy":1309592008.1600003,"ppm":0,"a_pagar":903591780.6750005,"utilidad_neta_original":2814232505,"a_pagar_original":770794781.1450001},"segmentos":{"Holding y Servicios":{"ingresos":786006489,"utilidad_neta":107311270,"result_oper":54774373,"a_pagar":46730273.825,"n":3},"Inmobiliarias y Rentas":{"ingresos":21193719529,"utilidad_neta":4276479058,"result_oper":4297133189,"a_pagar":1160716980.7300003,"n":12},"Constructora":{"ingresos":11078516552,"utilidad_neta":-1125390644,"result_oper":-296289434,"a_pagar":-303855473.88,"n":3}},"grupo_rentas_subtotal":{"ingresos":2101123276,"utilidad_neta":990976194}};
+
+const fmtMM = v => new Intl.NumberFormat('es-CL',{maximumFractionDigits:0,minimumFractionDigits:0}).format(v/1e6);
+const fmtPct = v => (v===null||v===undefined) ? '—' : new Intl.NumberFormat('es-CL',{maximumFractionDigits:1}).format(v)+'%';
+const fmtTasa = v => new Intl.NumberFormat('es-CL',{maximumFractionDigits:1}).format(v*100)+'%';
+const signClass = v => v<0 ? 'neg' : 'pos';
+
+// ---------- KPIs ----------
+const c = DATA.consolidado;
+const kpis = [
+  {lbl:'Ingresos consolidados', val:'$'+fmtMM(c.ingresos)+' MM', cap:'18 empresas'},
+  {lbl:'Resultado operacional', val:'$'+fmtMM(c.result_oper)+' MM', cap:'Margen '+fmtPct(c.mo)},
+  {lbl:'Utilidad neta', val:'$'+fmtMM(c.utilidad_neta)+' MM', cap:'Margen neto '+fmtPct(c.mn), cls: c.utilidad_neta<0?'accent-neg':'accent-pos'},
+  {lbl:'Impuesto renta proyectado', val:'$'+fmtMM(c.impuesto_proy)+' MM', cap:'PPM pagado $'+fmtMM(c.ppm)+' MM'},
+  {lbl:'Impuesto teórico neto', val:(c.a_pagar<0?'– ':'')+'$'+fmtMM(Math.abs(c.a_pagar))+' MM', cap:c.a_pagar<0?'Saldo a favor':'Saldo a pagar', cls:c.a_pagar<0?'accent-pos':'accent-neg'},
+];
+document.getElementById('kpis').innerHTML = kpis.map(k=>`
+  <div class="kpi ${k.cls||''}">
+    <div class="lbl">${k.lbl}</div>
+    <div class="val mono">${k.val}</div>
+    <div class="cap">${k.cap}</div>
+  </div>`).join('');
+
+document.getElementById('diffUtilOld').textContent = fmtMM(c.utilidad_neta_original);
+document.getElementById('diffUtilNew').textContent = fmtMM(c.utilidad_neta);
+document.getElementById('diffPagOld').textContent = fmtMM(c.a_pagar_original);
+document.getElementById('diffPagNew').textContent = fmtMM(c.a_pagar);
+
+// ---------- resumen ejecutivo ----------
+const comp = DATA.companies;
+const topUtil = [...comp].sort((a,b)=>b.utilidad_neta-a.utilidad_neta)[0];
+const losers = comp.filter(x=>x.utilidad_neta<0).sort((a,b)=>a.utilidad_neta-b.utilidad_neta);
+const topDeuda = [...comp].sort((a,b)=>b.a_pagar-a.a_pagar)[0];
+const topFavor = [...comp].sort((a,b)=>a.a_pagar-b.a_pagar)[0];
+
+const execItems = [
+  `<b>${topUtil.nombre}</b> lidera el resultado del grupo con $${fmtMM(topUtil.utilidad_neta)} MM de utilidad neta (margen neto ${fmtPct(topUtil.mn)}).`,
+  `${losers.length} empresas cierran con pérdida neta: ${losers.map(l=>l.nombre+' ($'+fmtMM(l.utilidad_neta)+' MM)').join(', ')}.`,
+  `<b>${topDeuda.nombre}</b> concentra el mayor impuesto teórico a pagar ($${fmtMM(topDeuda.a_pagar)} MM), mientras <b>${topFavor.nombre}</b> queda con el mayor saldo a favor ($${fmtMM(Math.abs(topFavor.a_pagar))} MM).`,
+  `El grupo cierra con utilidad neta consolidada de $${fmtMM(c.utilidad_neta)} MM sobre $${fmtMM(c.ingresos)} MM de ingresos (margen neto ${fmtPct(c.mn)}) y un impuesto teórico neto ${c.a_pagar<0?'a favor':'a pagar'} de $${fmtMM(Math.abs(c.a_pagar))} MM.`,
+];
+document.getElementById('execList').innerHTML = execItems.map(t=>`<li>${t}</li>`).join('');
+
+const segOrder = ['Constructora','Inmobiliarias y Rentas','Holding y Servicios'];
+document.getElementById('segRow').innerHTML = segOrder.map(s=>{
+  const d = DATA.segmentos[s];
+  return `<div class="seg-tile">
+    <div class="nm">${s} <span style="color:var(--muted); font-weight:400;">(${d.n})</span></div>
+    <div class="row"><span>Ingresos</span><b>$${fmtMM(d.ingresos)} MM</b></div>
+    <div class="row"><span>Utilidad neta</span><b class="${signClass(d.utilidad_neta)}">$${fmtMM(d.utilidad_neta)} MM</b></div>
+    <div class="row"><span>Impto. teórico</span><b class="${signClass(d.a_pagar)}">$${fmtMM(d.a_pagar)} MM</b></div>
+  </div>`;
+}).join('');
+
+document.getElementById('grNoteIng').textContent = fmtMM(DATA.grupo_rentas_subtotal.ingresos);
+document.getElementById('grNoteUt').textContent = fmtMM(DATA.grupo_rentas_subtotal.utilidad_neta);
+
+// ---------- bar charts ----------
+function renderBars(elId, items, valueKey, labelFmt){
+  const max = Math.max(...items.map(i=>Math.abs(i[valueKey])), 1);
+  const el = document.getElementById(elId);
+  el.innerHTML = items.map(i=>{
+    const v = i[valueKey];
+    const pct = Math.max(Math.abs(v)/max*100, v!==0 ? 1.5 : 0);
+    const cls = v<0 ? 'neg' : 'pos';
+    return `<div class="bar-row" title="${i.nombre_legal}">
+      <div class="nm">${i.nombre}</div>
+      <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
+      <div class="v ${cls}">${labelFmt(v)}</div>
+    </div>`;
+  }).join('');
+}
+
+renderBars('chartUtilidad', [...comp].sort((a,b)=>b.utilidad_neta-a.utilidad_neta), 'utilidad_neta', v=>'$'+fmtMM(v));
+renderBars('chartImpuesto', [...comp].sort((a,b)=>b.a_pagar-a.a_pagar), 'a_pagar', v=>'$'+fmtMM(v));
+
+// ---------- table ----------
+let sortKey = 'ingresos', sortAsc = false;
+
+function companyRow(x){
+  return `<tr>
+    <td>${x.nombre}${x.franquicia14e?'<span class="badge-fr">14E</span>':''}<div class="rut">${x.rut} · <span class="seg-tag">${x.segmento}</span></div></td>
+    <td>${fmtMM(x.ingresos)}</td>
+    <td class="${signClass(x.result_oper)}">${fmtMM(x.result_oper)}</td>
+    <td>${fmtPct(x.mo)}</td>
+    <td class="${signClass(x.utilidad_neta)}">${fmtMM(x.utilidad_neta)}</td>
+    <td>${fmtPct(x.mn)}</td>
+    <td>${fmtTasa(x.tasa)}</td>
+    <td>${fmtMM(x.impuesto_proy)}</td>
+    <td>${fmtMM(x.ppm)}</td>
+    <td class="${signClass(x.a_pagar)}">${x.a_pagar<0?'(':''}${fmtMM(Math.abs(x.a_pagar))}${x.a_pagar<0?')':''}</td>
+  </tr>`;
+}
+function segTotalRow(name, d){
+  return `<tr class="seg-total">
+    <td>Subtotal ${name}</td>
+    <td>${fmtMM(d.ingresos)}</td>
+    <td class="${signClass(d.result_oper)}">${fmtMM(d.result_oper)}</td>
+    <td>${fmtPct(d.result_oper/d.ingresos*100)}</td>
+    <td class="${signClass(d.utilidad_neta)}">${fmtMM(d.utilidad_neta)}</td>
+    <td>${fmtPct(d.utilidad_neta/d.ingresos*100)}</td>
+    <td>—</td><td>—</td><td>—</td>
+    <td class="${signClass(d.a_pagar)}">${d.a_pagar<0?'(':''}${fmtMM(Math.abs(d.a_pagar))}${d.a_pagar<0?')':''}</td>
+  </tr>`;
+}
+
+function renderTable(){
+  const sorted = [...comp].sort((a,b)=>{
+    let av=a[sortKey], bv=b[sortKey];
+    if (typeof av === 'string') return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+    av = av ?? -Infinity; bv = bv ?? -Infinity;
+    return sortAsc ? av-bv : bv-av;
+  });
+  let html = '';
+  if (sortKey === 'nombre'){
+    // grouped view
+    segOrder.forEach(seg=>{
+      const rows = sorted.filter(x=>x.segmento===seg);
+      if(!rows.length) return;
+      html += `<tr class="seg-header"><td colspan="10">${seg}</td></tr>`;
+      html += rows.map(companyRow).join('');
+      html += segTotalRow(seg, DATA.segmentos[seg]);
+    });
+  } else {
+    html = sorted.map(companyRow).join('');
+  }
+  html += `<tr class="grand-total">
+    <td>CONSOLIDADO GRUPO TASCO</td>
+    <td>${fmtMM(c.ingresos)}</td>
+    <td>${fmtMM(c.result_oper)}</td>
+    <td>${fmtPct(c.mo)}</td>
+    <td>${fmtMM(c.utilidad_neta)}</td>
+    <td>${fmtPct(c.mn)}</td>
+    <td>—</td>
+    <td>${fmtMM(c.impuesto_proy)}</td>
+    <td>${fmtMM(c.ppm)}</td>
+    <td>${c.a_pagar<0?'(':''}${fmtMM(Math.abs(c.a_pagar))}${c.a_pagar<0?')':''}</td>
+  </tr>`;
+  document.getElementById('tbody').innerHTML = html;
+}
+renderTable();
+
+document.querySelectorAll('#mainTable thead th').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const k = th.dataset.k;
+    if (sortKey === k){ sortAsc = !sortAsc; } else { sortKey = k; sortAsc = false; }
+    document.querySelectorAll('#mainTable thead th').forEach(x=>x.classList.remove('sorted','asc'));
+    th.classList.add('sorted'); if(sortAsc) th.classList.add('asc');
+    renderTable();
+  });
+});
+
+document.getElementById('genDate').textContent = 'Generado ' + new Date().toLocaleDateString('es-CL',{year:'numeric',month:'long',day:'numeric'});
+</script>
