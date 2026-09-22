@@ -217,6 +217,21 @@
   .rut{color:var(--muted); font-size:11px;}
   .badge-fr{font-size:9.5px; font-family:'IBM Plex Sans'; background:var(--positive-soft); color:var(--positive); padding:1px 5px; border-radius:4px; margin-left:5px; font-weight:600;}
 
+  /* ---------- group tabs ---------- */
+  .group-tabs{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .group-tab{
+    padding:8px 16px; border-radius:20px; border:1px solid var(--border); background:var(--surface);
+    color:var(--ink-2); font-size:12.5px; font-weight:600; font-family:'IBM Plex Sans';
+    cursor:pointer; user-select:none; transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .group-tab .n{color:var(--muted); font-weight:500;}
+  .group-tab:hover:not(.active){background:var(--surface-2);}
+  .group-tab.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .group-tab.active .n{color:#c7d2e2;}
+  .grp-kpis{display:grid; grid-template-columns:repeat(5,1fr); gap:12px;}
+  @media (max-width:920px){ .grp-kpis{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .grp-kpis{grid-template-columns:1fr;} }
+
   /* ---------- notes ---------- */
   .notes{font-size:12.5px; color:var(--muted); line-height:1.7;}
   .notes ol{margin:8px 0 0; padding-left:20px;}
@@ -311,6 +326,12 @@
   </section>
 
   <section>
+    <div class="section-head"><h2>Detalle por Grupo</h2><span class="hint">Vista por unidad de negocio · cifras en MM$</span></div>
+    <div class="group-tabs" id="groupTabs"></div>
+    <div id="groupPanel"></div>
+  </section>
+
+  <section>
     <div class="section-head"><h2>Metodología y notas</h2></div>
     <div class="card notes">
       <p>Cada empresa carga su EERR mensual a mano (enero a la fecha de cierre real) y proyecta a mano los meses restantes ("Forecast"); el total anual es la suma de ambos. El resultado tributario proyectado suma Agregados y resta Deducciones sobre la utilidad neta, se multiplica por la tasa de Primera Categoría (27% régimen general; 12,5% Mapa Asesorías y Santa Paz) y se compara contra los Pagos Provisionales Mensuales (PPM) ya enterados para obtener el saldo teórico a pagar o a favor.</p>
@@ -318,6 +339,7 @@
         <li>Inmobiliaria Playa Blanca, Inmobiliaria Nuevo Mundo, Rentas Plaza de Asís, Mapa Asesorías y Santa Paz aplican la franquicia Art. 14 E LIR (50% de la renta líquida reinvertida) — marcadas con <span class="badge-fr">14E</span> en la tabla.</li>
         <li>Inmobiliaria Playa Blanca, Nuevo Mundo y Rentas Plaza de Asís forman además el subgrupo informativo "Grupo Rentas SpA" (ingresos MM$&nbsp;<span id="grNoteIng"></span> · utilidad neta MM$&nbsp;<span id="grNoteUt"></span>), ya incluido en el total por sus tres componentes — no se vuelve a sumar aparte.</li>
         <li>Todas las cifras de impuesto son <strong>proyecciones teóricas</strong> a la fecha de este reporte; no reemplazan la Operación Renta (F22) ni una declaración ante el SII.</li>
+        <li>La vista "Detalle por Grupo" usa una clasificación de unidad de negocio distinta al segmento contable de la tabla principal: Administración (Adm. Tiempo Norte) · Constructora (Proy. y Const. Tasco, BLC) · Inmobiliaria (Inmob. ICV Sauzal, Vista de Águila, Conquistadores Norte, Vías Machalí, Cerro Navidad, Inversierra) · Inversiones (Inversiones HBD, Santa Gloria, Grupo Tasco Boetsch, Mapa Asesorías, Santa Paz) · Maquinaria (Equipos y Moldajes Beta) · Renta (Inmob. Playa Blanca, Inmob. Nuevo Mundo, Rentas Plaza de Asís).</li>
       </ol>
     </div>
   </section>
@@ -483,4 +505,129 @@ document.querySelectorAll('#mainTable thead th').forEach(th=>{
 });
 
 document.getElementById('genDate').textContent = 'Generado ' + new Date().toLocaleDateString('es-CL',{year:'numeric',month:'long',day:'numeric'});
+
+// ---------- detalle por grupo ----------
+const GROUPS = {
+  'Administración': ['J'],
+  'Constructora': ['Q','R'],
+  'Inmobiliaria': ['L','M','N','O','P','K'],
+  'Inversiones': ['C','H','I','T','U'],
+  'Maquinaria': ['S'],
+  'Renta': ['E','F','G'],
+};
+const groupOrder = ['Administración','Constructora','Inmobiliaria','Inversiones','Maquinaria','Renta'];
+let activeGroup = 'Administración';
+
+function companiesInGroup(g){
+  return comp.filter(x => GROUPS[g].includes(x.code));
+}
+function groupAgg(companies){
+  const sum = k => companies.reduce((s,x)=>s+x[k],0);
+  const ingresos = sum('ingresos'), result_oper = sum('result_oper'), utilidad_neta = sum('utilidad_neta'),
+        impuesto_proy = sum('impuesto_proy'), ppm = sum('ppm'), a_pagar = sum('a_pagar');
+  return {
+    ingresos, result_oper, utilidad_neta, impuesto_proy, ppm, a_pagar,
+    mo: ingresos!==0 ? result_oper/ingresos*100 : null,
+    mn: ingresos!==0 ? utilidad_neta/ingresos*100 : null,
+    n: companies.length,
+  };
+}
+function groupTotalRow(name, agg){
+  return `<tr class="grand-total">
+    <td>TOTAL ${name.toUpperCase()}</td>
+    <td>${fmtMM(agg.ingresos)}</td>
+    <td>${fmtMM(agg.result_oper)}</td>
+    <td>${fmtPct(agg.mo)}</td>
+    <td>${fmtMM(agg.utilidad_neta)}</td>
+    <td>${fmtPct(agg.mn)}</td>
+    <td>—</td>
+    <td>${fmtMM(agg.impuesto_proy)}</td>
+    <td>${fmtMM(agg.ppm)}</td>
+    <td>${agg.a_pagar<0?'(':''}${fmtMM(Math.abs(agg.a_pagar))}${agg.a_pagar<0?')':''}</td>
+  </tr>`;
+}
+
+function renderGroupTabs(){
+  document.getElementById('groupTabs').innerHTML = groupOrder.map(g=>{
+    const n = companiesInGroup(g).length;
+    return `<button type="button" class="group-tab${g===activeGroup?' active':''}" data-g="${g}">${g} <span class="n">(${n})</span></button>`;
+  }).join('');
+  document.querySelectorAll('.group-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeGroup = btn.dataset.g;
+      renderGroupTabs();
+      renderGroupPanel();
+    });
+  });
+}
+
+function renderGroupPanel(){
+  const g = activeGroup;
+  const companies = companiesInGroup(g);
+  const agg = groupAgg(companies);
+  const kpis = [
+    {lbl:'Ingresos', val:'$'+fmtMM(agg.ingresos)+' MM', cap:agg.n+' empresa'+(agg.n!==1?'s':'')},
+    {lbl:'Resultado operacional', val:'$'+fmtMM(agg.result_oper)+' MM', cap:'Margen '+fmtPct(agg.mo)},
+    {lbl:'Utilidad neta', val:'$'+fmtMM(agg.utilidad_neta)+' MM', cap:'Margen neto '+fmtPct(agg.mn), cls: agg.utilidad_neta<0?'accent-neg':'accent-pos'},
+    {lbl:'Impuesto renta proyectado', val:'$'+fmtMM(agg.impuesto_proy)+' MM', cap:'PPM pagado $'+fmtMM(agg.ppm)+' MM'},
+    {lbl:'Impuesto teórico neto', val:(agg.a_pagar<0?'– ':'')+'$'+fmtMM(Math.abs(agg.a_pagar))+' MM', cap:agg.a_pagar<0?'Saldo a favor':'Saldo a pagar', cls:agg.a_pagar<0?'accent-pos':'accent-neg'},
+  ];
+  const kpisHtml = kpis.map(k=>`
+    <div class="kpi ${k.cls||''}">
+      <div class="lbl">${k.lbl}</div>
+      <div class="val mono">${k.val}</div>
+      <div class="cap">${k.cap}</div>
+    </div>`).join('');
+
+  const sortedByUtil = [...companies].sort((a,b)=>b.utilidad_neta-a.utilidad_neta);
+  const sortedByPagar = [...companies].sort((a,b)=>b.a_pagar-a.a_pagar);
+  const tableRows = [...companies].sort((a,b)=>b.ingresos-a.ingresos).map(companyRow).join('') + groupTotalRow(g, agg);
+
+  document.getElementById('groupPanel').innerHTML = `
+    <div class="grp-kpis">${kpisHtml}</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card">
+        <h3>Utilidad neta por empresa</h3>
+        <div class="desc">Grupo ${g} · MM$</div>
+        <div class="barchart" id="grpChartUtilidad"></div>
+        <div class="legend"><span><i class="pos"></i>Utilidad</span><span><i class="neg"></i>Pérdida</span></div>
+      </div>
+      <div class="card">
+        <h3>Posición tributaria teórica</h3>
+        <div class="desc">Grupo ${g} · MM$</div>
+        <div class="barchart" id="grpChartImpuesto"></div>
+        <div class="legend"><span><i class="neg"></i>A pagar</span><span><i class="pos"></i>A favor</span></div>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:16px;">
+      <table>
+        <colgroup>
+          <col style="width:19%">
+          <col style="width:9%"><col style="width:9%"><col style="width:9%">
+          <col style="width:9%"><col style="width:9%"><col style="width:7%">
+          <col style="width:10%"><col style="width:9.5%"><col style="width:9.5%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th style="text-align:left; cursor:default;">Empresa</th>
+            <th style="cursor:default;">Ingresos</th>
+            <th style="cursor:default;">Result. Oper.</th>
+            <th style="cursor:default;">Mg Oper %</th>
+            <th style="cursor:default;">Utilidad Neta</th>
+            <th style="cursor:default;">Mg Neto %</th>
+            <th style="cursor:default;">Tasa</th>
+            <th style="cursor:default;">Impto. Renta Proy.</th>
+            <th style="cursor:default;">PPM Pagado</th>
+            <th style="cursor:default;">A Pagar / (Favor)</th>
+          </tr>
+        </thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>`;
+  renderBars('grpChartUtilidad', sortedByUtil, 'utilidad_neta', v=>'$'+fmtMM(v));
+  renderBars('grpChartImpuesto', sortedByPagar, 'a_pagar', v=>'$'+fmtMM(v));
+}
+
+renderGroupTabs();
+renderGroupPanel();
 </script>
